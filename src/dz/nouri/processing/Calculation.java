@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Jama.Matrix;
 import dz.nouri.process3d.Vector2f;
 import dz.nouri.process3d.Vector3f;
+import dz.nouri.process3d.Vertex;
 
 public final class Calculation {
 
@@ -18,16 +19,20 @@ public final class Calculation {
 
 		ArrayList<Float> floats = new ArrayList<>();
 
-		for(int index = 0; index < points.size(); index++) {
-			if(index != j)
+		for (int index = 0; index < points.size(); index++) {
+			if (index != j)
 				floats.add(points.get(index).sub(points.get(j)).norme());
 		}
-		
+
 		float min = floats.get(0);
-		
-		for(int index = 1; index < floats.size(); index++)
-			if(floats.get(index) < min) min = floats.get(index);
-		return (float) Math.sqrt(sum + Math.pow(min, 2)); // sqrt[(||sj - si||)² + scj²]
+
+		// Get the min value
+		for (int index = 1; index < floats.size(); index++)
+			if (floats.get(index) < min)
+				min = floats.get(index);
+
+		return (float) Math.sqrt(sum + Math.pow(min, 2)); // sqrt[(||sj - si||)²
+															// + scj²]
 
 	}
 
@@ -64,11 +69,10 @@ public final class Calculation {
 	// calculate the new Tj Feature points in a frame!
 	public static Vector3f calculateTj(ArrayList<Vector3f> w, ArrayList<Vector2f> points, int j) {
 		Vector3f tj = null;
-		float x  = 0, y = 0, z = 0;
-		
+		float x = 0, y = 0, z = 0;
+
 		for (int i = 0; i < w.size(); i++) {
 			float h = calcH(points, i, j);
-			System.out.println(h);
 			x += w.get(i).getX() * h;
 			y += w.get(i).getY() * h;
 			z += w.get(i).getZ() * h;
@@ -76,5 +80,41 @@ public final class Calculation {
 		tj = new Vector3f(x, y, z);
 		return tj;
 	}
+
+	/*
+	 * vertices: retrived from the 3D model fdps: Position of all Feature points
+	 * indices: indices of the fdps (Feature points)
+	 */
+	public static ArrayList<Vertex> calcVertices(ArrayList<Vector3f> vertices, ArrayList<Vector3f> fdps, ArrayList<Integer> indices) {
+
+		ArrayList<Vertex> result = new ArrayList<>();
+
+		for (int i = 0; i < vertices.size(); i++) {
+			if (!indices.contains(i)) {
+
+			}
+		}
+
+		return result;
+
+	}
+
+	private ArrayList<Vector3f> calcDistance(Vector3f vertex, ArrayList<Vector3f> fdps) {
+		ArrayList<Vector3f> result = new ArrayList<>();
+		for (int i = 0; i < fdps.size(); i++) {
+			result.add(vertex.sub(fdps.get(i)));
+		}
+		return result;
+	}
+
+	private float calcWeight(Vector3f distance, Vector3f r) {
+
+		
+		
+		return 0;
+	}
+	
+	
+	
 
 }

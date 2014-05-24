@@ -27,7 +27,6 @@ public class TestRuntime {
 		ArrayList<Vector3f> pdc = PDCProcessor.getPDCs("./data/image100.nouri");
 		
 		System.out.println("Nombre des sommets du Mesh: " + model.getPositions().size());
-		System.out.println("*******************************");
 		
 		HashMap<String, Integer> theMap = FDPMapPDC.getTheMap(); // Map between PDC and FDP
 		System.out.println("Liste de corespondance entre FDP & PDC");
