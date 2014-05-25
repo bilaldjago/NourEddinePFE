@@ -11,9 +11,12 @@ public final class Calculation {
 
 	// Calculate h parameter
 	// sqrt[(||sj - si||)² + scj²]
-	public static float calcH(ArrayList<Vector2f> points, int i, int j) {
+	public static float calcH(ArrayList<Vector3f> points, int i, int j) {
 
-		Vector2f res = points.get(j).sub(points.get(i)); // sj - si
+		Vector2f p1 = searchFor(points,i).getXYPoint();
+		Vector2f p2 = searchFor(points,j).getXYPoint();
+		
+		Vector2f res = p2.sub(p1); // sj - si (sj is the correspondent of Tj
 
 		float sum = (float) Math.pow(res.norme(), 2); // (||sj - si||)²
 
@@ -21,9 +24,8 @@ public final class Calculation {
 
 		for (int index = 0; index < points.size(); index++) {
 			if (index != j)
-				floats.add(points.get(index).sub(points.get(j)).norme());
+				floats.add(points.get(index).getXYPoint().sub(points.get(j).getXYPoint()).norme());
 		}
-
 		float min = floats.get(0);
 
 		// Get the min value
@@ -31,13 +33,18 @@ public final class Calculation {
 			if (floats.get(index) < min)
 				min = floats.get(index);
 
-		return (float) Math.sqrt(sum + Math.pow(min, 2)); // sqrt[(||sj - si||)²
-															// + scj²]
+		return (float) Math.sqrt(sum + Math.pow(min, 2)); // sqrt[(||sj - si||)² + scj²]
+	}
 
+	private static Vector3f searchFor(ArrayList<Vector3f> points, int i) {
+		for(Vector3f vec : points)
+			if(vec.getZ() == i)
+				return vec;
+		return null;
 	}
 
 	// Calculate the H matrix
-	public static Matrix calculateHMatrix(ArrayList<Vector2f> pointList) {
+	public static Matrix calculateHMatrix(ArrayList<Vector3f> pointList) {
 		Matrix res = new Matrix(pointList.size(), pointList.size());
 		for (int i = 0; i < pointList.size(); i++)
 			for (int j = 0; j < pointList.size(); j++)
@@ -46,7 +53,7 @@ public final class Calculation {
 	}
 
 	// Calculate Wx, Wy and Wz and puts them in a single ArrayList of vector3f
-	public static ArrayList<Vector3f> calculateW(ArrayList<Vector3f> fdps3D, ArrayList<Vector2f> pointList) {
+	public static ArrayList<Vector3f> calculateW(ArrayList<Vector3f> fdps3D, ArrayList<Vector3f> pointList) {
 		return mul(calculateHMatrix(pointList).inverse(), fdps3D);
 	}
 
@@ -67,7 +74,8 @@ public final class Calculation {
 	}
 
 	// calculate the new Tj Feature points in a frame!
-	public static Vector3f calculateTj(ArrayList<Vector3f> w, ArrayList<Vector2f> points, int j) {
+	public static Vector3f calculateTj(ArrayList<Vector3f> points, int j) {
+		ArrayList<Vector3f> w = new ArrayList<>();
 		Vector3f tj = null;
 		float x = 0, y = 0, z = 0;
 
@@ -96,7 +104,6 @@ public final class Calculation {
 		}
 
 		return result;
-
 	}
 
 	private ArrayList<Vector3f> calcDistance(Vector3f vertex, ArrayList<Vector3f> fdps) {
@@ -113,8 +120,6 @@ public final class Calculation {
 		
 		return 0;
 	}
-	
-	
-	
 
 }
+

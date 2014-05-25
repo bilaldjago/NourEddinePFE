@@ -9,9 +9,25 @@ import dz.nouri.process3d.Vector3f;
 
 public class PDCProcessor {
 
+	private static final String FILENAME = "./data/image002.nouri";
+	
 	public static ArrayList<Vector3f> getPDCs(String file) {
 		ArrayList<Vector3f> pdcs = new ArrayList<>();
 		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+			String[] tokens = reader.readLine().split("\\|");
+			for (String point : tokens) {
+				String[] data = point.split("\\,");
+				pdcs.add(new Vector3f(Float.parseFloat(data[0]), Float.parseFloat(data[1]), Float.parseFloat(data[2])));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return pdcs;
+	}
+
+	public static ArrayList<Vector3f> getInitPDCs() {
+		ArrayList<Vector3f> pdcs = new ArrayList<>();
+		try (BufferedReader reader = new BufferedReader(new FileReader(FILENAME))) {
 			String[] tokens = reader.readLine().split("\\|");
 			for (String point : tokens) {
 				String[] data = point.split("\\,");

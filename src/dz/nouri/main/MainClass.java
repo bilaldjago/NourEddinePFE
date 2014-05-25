@@ -11,8 +11,7 @@ public class MainClass {
 	public static void main(String[] args) {
 
 		try {
-			for (UIManager.LookAndFeelInfo info : UIManager
-					.getInstalledLookAndFeels()) {
+			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if (info.getName().equals("Nimbus")) {
 					UIManager.setLookAndFeel(info.getClassName());
 				}

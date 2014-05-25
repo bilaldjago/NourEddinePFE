@@ -16,23 +16,22 @@ import dz.nouri.tools.PDCProcessor;
 public class TestRuntime {
 
 	public static void main(String[] args) {
-		HashMap<String, Integer> map = FDPProcessor.getFDPVertexIndices("./expressions/source2.fdp");
-		OBJModel model = new OBJModel("./expressions/face.obj");
-		ArrayList<Vector3f> fdp = new ArrayList<>();
-
-		for(Integer index : map.values()) {
-			fdp.add(model.getPosition(index));
-		}
+		OBJModel model = new OBJModel();
+		ArrayList<Vector3f> fdp = model.getFDPs();
 		
-		ArrayList<Vector3f> pdc = PDCProcessor.getPDCs("./data/image100.nouri");
+		ArrayList<Vector3f> pdc = PDCProcessor.getInitPDCs();
 		
 		System.out.println("Nombre des sommets du Mesh: " + model.getPositions().size());
 		
-		HashMap<String, Integer> theMap = FDPMapPDC.getTheMap(); // Map between PDC and FDP
+		// Map between PDC and FDP
+		HashMap<String, Integer> theMap = FDPMapPDC.getTheMap();
 		System.out.println("Liste de corespondance entre FDP & PDC");
 		System.out.println("");
 		for(Map.Entry<String, Integer> entry : theMap.entrySet())
 			System.out.println(entry.getKey() + "->" + entry.getValue());
+		
+		
+		
 		
 		ArrayList<Vector3f> weights = Calculation.calculateW(fdp, get2D(pdc)); 
 		System.out.println("*******************************");

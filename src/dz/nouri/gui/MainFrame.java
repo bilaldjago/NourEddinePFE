@@ -22,10 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-import dz.nouri.processing.AnimationCalculation;
 import dz.nouri.processing.CalcKeyPoint;
 import dz.nouri.processing.ImagesToVideo;
 import dz.nouri.processing.VideoToImages;
@@ -289,7 +287,7 @@ public class MainFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AnimationCalculation.calculateAnimationSquence();
+			// TODO AnimationCalculation.calculateAnimationSquence();
 			open3D.setEnabled(true);
 			open3DBtn.setEnabled(true);
 		}
