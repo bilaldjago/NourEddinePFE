@@ -1,0 +1,14 @@
+.settings
+bin*/
+data*/
+expressions*/
+generatedVideo*/
+imageKeyPoint*/
+images*/
+resultatExpression*/
+source*/
+.classpath
+.project
+*.dll
+*.class
+*.jpg
