@@ -24,6 +24,7 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingWorker;
 
+import dz.nouri.process3d.OBJModel;
 import dz.nouri.processing.CalcKeyPoint;
 import dz.nouri.processing.ImagesToVideo;
 import dz.nouri.processing.VideoToImages;
@@ -114,7 +115,7 @@ public class MainFrame extends JFrame {
 		calcAnim.setEnabled(false);
 
 		open3D = new JMenuItem(open3DAction);
-		open3D.setEnabled(false);
+//		open3D.setEnabled(false);
 
 		processing.add(calcKeyPoint);
 		processing.add(genVideo);
@@ -149,7 +150,7 @@ public class MainFrame extends JFrame {
 		calcAnimBtn.setEnabled(false);
 
 		open3DBtn = new JButton(open3DAction);
-		open3DBtn.setEnabled(false);
+//		open3DBtn.setEnabled(false);
 
 		toolBar.add(openBtn);
 		toolBar.add(calcKeyPointBtn);
@@ -305,7 +306,7 @@ public class MainFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			desktop.add(new Play3DScene("./resultatExpression/expression.nouri"));
+			desktop.add(new Display3DScene(new OBJModel().getFDPs()));
 
 		}
 

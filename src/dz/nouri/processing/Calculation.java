@@ -74,8 +74,8 @@ public final class Calculation {
 	}
 
 	// calculate the new Tj Feature points in a frame!
-	public static Vector3f calculateTj(ArrayList<Vector3f> points, int j) {
-		ArrayList<Vector3f> w = new ArrayList<>();
+	public static Vector3f calculateTj(ArrayList<Vector3f> fdp, ArrayList<Vector3f> points, int j) {
+		ArrayList<Vector3f> w = calculateW(fdp, points);
 		Vector3f tj = null;
 		float x = 0, y = 0, z = 0;
 
