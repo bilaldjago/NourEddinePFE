@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		super("Tests");
 		setDefaultCloseOperation(3);
-		setSize(800, 600);
+		setSize(320, 240);
 		setLocationRelativeTo(null);
 		desktop.setBackground(Color.DARK_GRAY);
 		add(desktop, BorderLayout.CENTER);

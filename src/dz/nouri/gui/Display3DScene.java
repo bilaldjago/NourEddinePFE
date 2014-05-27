@@ -32,6 +32,7 @@ import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
+import dz.nouri.process3d.Vector2f;
 import dz.nouri.process3d.Vector3f;
 
 public class Display3DScene extends JInternalFrame {
@@ -65,7 +66,7 @@ public class Display3DScene extends JInternalFrame {
 	}
 
 	private BranchGroup drawFDPS() {
-		// TODO draw 3D spheres in the place of FDPS
+		// TODO draw 3D spheres overlapping FDPS
 		BranchGroup lineGroup = new BranchGroup();
 		Appearance app = new Appearance();
 		ColoringAttributes ca = new ColoringAttributes(new Color3f(.0f, 204.0f, .0f), ColoringAttributes.SHADE_FLAT);
@@ -150,4 +151,17 @@ public class Display3DScene extends JInternalFrame {
 
 	}
 
+	public Vector2f projection(Vector3f input) {
+		// TODO must project 3D on the screen!
+		int screenCenterX = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2;
+		int screenCenterY = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2;
+
+		float x = input.getX();
+		float y = input.getY();
+
+		float temp = 180 / (20 - input.getZ());
+		x = screenCenterX + 10 * temp * x;
+		y = screenCenterY - 10 * temp * y;
+		return new Vector2f(x, y);
+	}
 }
