@@ -2,7 +2,6 @@ package dz.nouri.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -32,7 +31,6 @@ import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
-import dz.nouri.process3d.Vector2f;
 import dz.nouri.process3d.Vector3f;
 
 public class Display3DScene extends JInternalFrame {
@@ -61,42 +59,39 @@ public class Display3DScene extends JInternalFrame {
 		su.addBranchGraph(createSceneBranch("./expressions/face.obj"));
 		su.addBranchGraph(drawFDPS());
 		su.getViewingPlatform().setNominalViewingTransform();
-
+		System.out.println(fdps);
 		setVisible(true);
 	}
 
 	private BranchGroup drawFDPS() {
-		// TODO draw 3D spheres overlapping FDPS
-		BranchGroup lineGroup = new BranchGroup();
+		BranchGroup group = new BranchGroup();
 		Appearance app = new Appearance();
-		ColoringAttributes ca = new ColoringAttributes(new Color3f(.0f, 204.0f, .0f), ColoringAttributes.SHADE_FLAT);
+		ColoringAttributes ca = new ColoringAttributes(new Color3f(255.0f, .0f, .0f), ColoringAttributes.SHADE_FLAT);
 		app.setColoringAttributes(ca);
-
-		Point3f[] plaPts = new Point3f[4];
-		int count = 0;
-		for (int i = 0; i < 2; i++) {
-			for (int j = 0; j < 2; j++) {
-				plaPts[count] = new Point3f(i / 10.0f, j / 10.0f, 0);
-				count++;
-			}
+		System.out.println(fdps.size());
+		Point3f[] plaPts = new Point3f[fdps.size()];
+		
+		for (int i = 0; i < fdps.size(); i++) {
+			plaPts[i] = new Point3f(fdps.get(i).getX(), fdps.get(i).getY(), fdps.get(i).getZ());
 		}
-		PointArray pla = new PointArray(4, GeometryArray.COORDINATES);
+		
+		PointArray pla = new PointArray(fdps.size(), GeometryArray.COORDINATES);
 
 		pla.setCoordinates(0, plaPts);
 		// between here!
 		PointAttributes a_point_just_bigger = new PointAttributes();
-		a_point_just_bigger.setPointSize(10.0f);// 10 pixel-wide point
-		a_point_just_bigger.setPointAntialiasingEnable(true);// now points are
-																// sphere-like(not
-																// a cube)
+		// 10 pixel-wide point
+		a_point_just_bigger.setPointSize(5);
+		// now points are sphere-like(not a cube)
+		a_point_just_bigger.setPointAntialiasingEnable(true);
 		app.setPointAttributes(a_point_just_bigger);
 		// and here! sets the point-attributes so it is easily seen.
 		Shape3D plShape = new Shape3D(pla, app);
 		TransformGroup objRotate = new TransformGroup();
 		objRotate.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		objRotate.addChild(plShape);
-		lineGroup.addChild(objRotate);
-		return lineGroup;
+		group.addChild(objRotate);
+		return group;
 	}
 
 	private BranchGroup load3DObject(String path) {
@@ -151,17 +146,4 @@ public class Display3DScene extends JInternalFrame {
 
 	}
 
-	public Vector2f projection(Vector3f input) {
-		// TODO must project 3D on the screen!
-		int screenCenterX = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2;
-		int screenCenterY = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2;
-
-		float x = input.getX();
-		float y = input.getY();
-
-		float temp = 180 / (20 - input.getZ());
-		x = screenCenterX + 10 * temp * x;
-		y = screenCenterY - 10 * temp * y;
-		return new Vector2f(x, y);
-	}
 }

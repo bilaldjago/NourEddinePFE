@@ -1,9 +1,12 @@
 package dz.nouri.process3d;
 
-
 public class Vector3f {
 
 	private float x, y, z;
+
+	public Vector3f() {
+		this(0, 0, 0);
+	}
 
 	public Vector3f(float x, float y, float z) {
 		this.x = x;
