@@ -12,7 +12,6 @@ public final class Calculation {
 	// Calculate h parameter
 	// sqrt[(||sj - si||)² + scj²]
 	public static float calcH(ArrayList<Vector3f> points, int i, int j) {
-
 		Vector2f p1 = searchFor(points,i).getXYPoint();
 		Vector2f p2 = searchFor(points,j).getXYPoint();
 		
@@ -57,8 +56,7 @@ public final class Calculation {
 		return mul(calculateHMatrix(pointList).inverse(), fdps3D);
 	}
 
-	// Calculate the multiplication of the inverse of the H matrix and the FDPs
-	// Vector
+	// Calculate the multiplication of the inverse of the H matrix and the FDPs Vector
 	private static ArrayList<Vector3f> mul(Matrix mat, ArrayList<Vector3f> fdps) {
 		ArrayList<Vector3f> res = new ArrayList<>();
 		for (int i = 0; i < fdps.size(); i++) {
@@ -102,7 +100,6 @@ public final class Calculation {
 
 			}
 		}
-
 		return result;
 	}
 
@@ -115,8 +112,6 @@ public final class Calculation {
 	}
 
 	private float calcWeight(Vector3f distance, Vector3f r) {
-
-		
 		
 		return 0;
 	}

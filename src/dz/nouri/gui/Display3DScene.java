@@ -64,33 +64,46 @@ public class Display3DScene extends JInternalFrame {
 	}
 
 	private BranchGroup drawFDPS() {
-		BranchGroup group = new BranchGroup();
-		Appearance app = new Appearance();
-		ColoringAttributes ca = new ColoringAttributes(new Color3f(255.0f, .0f, .0f), ColoringAttributes.SHADE_FLAT);
-		app.setColoringAttributes(ca);
-		System.out.println(fdps.size());
-		Point3f[] plaPts = new Point3f[fdps.size()];
-		
-		for (int i = 0; i < fdps.size(); i++) {
-			plaPts[i] = new Point3f(fdps.get(i).getX(), fdps.get(i).getY(), fdps.get(i).getZ());
-		}
-		
-		PointArray pla = new PointArray(fdps.size(), GeometryArray.COORDINATES);
 
-		pla.setCoordinates(0, plaPts);
-		// between here!
-		PointAttributes a_point_just_bigger = new PointAttributes();
-		// 10 pixel-wide point
-		a_point_just_bigger.setPointSize(5);
-		// now points are sphere-like(not a cube)
-		a_point_just_bigger.setPointAntialiasingEnable(true);
-		app.setPointAttributes(a_point_just_bigger);
-		// and here! sets the point-attributes so it is easily seen.
-		Shape3D plShape = new Shape3D(pla, app);
+		BranchGroup group = new BranchGroup();
+
+		Appearance app = new Appearance();
+
+		ColoringAttributes ca = new ColoringAttributes(new Color3f(255.0f, .0f, .0f), ColoringAttributes.SHADE_FLAT);
+
+		app.setColoringAttributes(ca);
+
+		System.out.println(fdps.size());
+
+		Point3f[] plaPts = new Point3f[fdps.size()];
+
+		for (int i = 0; i < fdps.size(); i++) {
+			plaPts[i] = new Point3f(fdps.get(i).getX(), fdps.get(i).getY() + .11f, fdps.get(i).getZ() + 0.195f);
+
+		}
+
+		PointArray pointArray = new PointArray(fdps.size(), GeometryArray.COORDINATES);
+
+		pointArray.setCoordinates(0, plaPts);
+
+		PointAttributes pointAttr = new PointAttributes();
+
+		pointAttr.setPointSize(5);
+
+		pointAttr.setPointAntialiasingEnable(true);
+
+		app.setPointAttributes(pointAttr);
+
+		Shape3D plShape = new Shape3D(pointArray, app);
+
 		TransformGroup objRotate = new TransformGroup();
+
 		objRotate.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+
 		objRotate.addChild(plShape);
+
 		group.addChild(objRotate);
+
 		return group;
 	}
 

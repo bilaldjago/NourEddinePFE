@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import dz.nouri.tools.FDPProcessor;
+import dz.nouri.tools.Utils;
 
 public class OBJModel {
 
 	private ArrayList<Vector3f> positions;
 	private ArrayList<Integer> indecies;
+	private Mesh mesh;
 	private static HashMap<String, Integer> map = new HashMap<>();
 
 	private static final String FACEOBJ = "./expressions/face.obj";
@@ -30,15 +32,18 @@ public class OBJModel {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				String[] tokens = line.split(" ");
+				tokens = Utils.removeEmptyString(tokens);
 				if (tokens[0].equals("v")) {
-					positions.add(new Vector3f(Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]), Float.parseFloat(tokens[3])));
-				} /*
-				 * else if (tokens[0].equals("f")) {
-				 * indecies.add(Integer.parseInt(tokens[1]));
-				 * indecies.add(Integer.parseInt(tokens[2]));
-				 * indecies.add(Integer.parseInt(tokens[3])); }
-				 */
+					positions.add(new Vector3f(Float.parseFloat(tokens[1]),
+											   Float.parseFloat(tokens[2]),
+											   Float.parseFloat(tokens[3])));
+				} else if (tokens[0].equals("f")) {
+					indecies.add(Integer.parseInt(tokens[1].split("/")[0]) - 1);
+					indecies.add(Integer.parseInt(tokens[2].split("/")[0]) - 1);
+					indecies.add(Integer.parseInt(tokens[3].split("/")[0]) - 1);
+				}
 			}
+			mesh = new Mesh(positions, Utils.toIntArray(indecies));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -204,4 +209,8 @@ public class OBJModel {
 		OBJModel.map = map;
 	}
 
+	public Mesh getMesh() {
+		return mesh;
+	}
+	
 }

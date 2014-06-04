@@ -190,8 +190,17 @@ public class MainFrame extends JFrame {
 				desktop.add(new VideoPlayer(fileChooser.getSelectedFile().getAbsolutePath(), 10, 10));
 				calcKeyPointBtn.setEnabled(true);
 				calcKeyPoint.setEnabled(true);
+				
+				while(true) {
+					File image = new File("./images/image002.jpg");
+					if(image.exists()){
+						System.out.println("it exsits");
+						desktop.add(new DisplayImage(image.getAbsolutePath()));
+						break;
+					}
+				}
+				
 			}
-
 		}
 
 	}
