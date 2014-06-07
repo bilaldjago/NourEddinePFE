@@ -56,11 +56,11 @@ public class Camera extends GameComponent
 			mouseLocked = true;
 		}
 		
-		if(Input.getKey(Input.KEY_W))
+		if(Input.getKey(Input.KEY_Z))
 			move(getTransform().getRot().getForward(), movAmt);
 		if(Input.getKey(Input.KEY_S))
 			move(getTransform().getRot().getForward(), -movAmt);
-		if(Input.getKey(Input.KEY_A))
+		if(Input.getKey(Input.KEY_Q))
 			move(getTransform().getRot().getLeft(), movAmt);
 		if(Input.getKey(Input.KEY_D))
 			move(getTransform().getRot().getRight(), movAmt);
